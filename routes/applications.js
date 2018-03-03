@@ -118,7 +118,7 @@ module.exports = app => {
       return res.json({
         status: 'Error',
         message: 'An unknown error occurred',
-        error: error,
+        error: error.message,
       });
     }
   });
