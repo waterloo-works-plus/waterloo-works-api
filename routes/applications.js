@@ -37,11 +37,18 @@ module.exports = app => {
       await page.waitForSelector(submitButtonIdentifier);
       await page.click(submitButtonIdentifier);
     
-      const postingsApplicationsButtonIdentifier = '#displayStudentMyPostingsApplications';
-      await page.waitForSelector(postingsApplicationsButtonIdentifier);  
+      try {
+        const postingsApplicationsButtonIdentifier = '#displayStudentMyPostingsApplications';
+        await page.waitForSelector(postingsApplicationsButtonIdentifier, { timeout: 10000 });
+      } catch (error) {
+        return res.json({
+          status: 'Error',
+          message: 'Failed to login'
+        });
+      }
     
       await page.evaluate(selectedTerm => {
-          orbisApp.buildForm({'action':'_-_-OmTSRZVRaEMr9pw1r9-auRDZ7vo0565eaAf9pNzLAKslFQpz1cW0GjaRD5MBgffmGrbIgRl-8GGIG06aRwWkyykAbNt2OCjT8G8baBI30tp3AxDGpiiGRlI9NksFAZwNbC3QNLF-xlrvGhvmN0SxgcXiubkp2IP9wsWUHLK_qbLFfV_dnbZylzA6zlZBri8','numOfDays':'-1','selectedTerm':selectedTerm}, '/myAccount/co-op/coopApplications.htm', '').submit();
+        orbisApp.buildForm({'action':'_-_-OmTSRZVRaEMr9pw1r9-auRDZ7vo0565eaAf9pNzLAKslFQpz1cW0GjaRD5MBgffmGrbIgRl-8GGIG06aRwWkyykAbNt2OCjT8G8baBI30tp3AxDGpiiGRlI9NksFAZwNbC3QNLF-xlrvGhvmN0SxgcXiubkp2IP9wsWUHLK_qbLFfV_dnbZylzA6zlZBri8','numOfDays':'-1','selectedTerm':selectedTerm}, '/myAccount/co-op/coopApplications.htm', '').submit();
       }, selectedTerm);
     
       try {
@@ -111,7 +118,7 @@ module.exports = app => {
       return res.json({
         status: 'Error',
         message: 'An unknown error occurred',
-        error: error
+        error: error,
       });
     }
   });
