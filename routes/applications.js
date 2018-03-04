@@ -16,7 +16,7 @@ module.exports = app => {
 
     if (!selectedTerm) {
       const now = new Date();
-      const termNum = 411 + (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
+      const termNum = 411 + 3 * (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
       selectedTerm = termNum.toString();
     }
 
@@ -63,7 +63,8 @@ module.exports = app => {
         // No applications message must be visible
         return res.json({
           status: 'OK',
-          data: []
+          jobIds: [],
+          jobs: {},
         });
       }
       
@@ -72,7 +73,8 @@ module.exports = app => {
     
       const numApps = parseInt($('.badge-info').text());
       const appRows = $('tr').slice(1, numApps);
-      const apps = [];
+      const jobIds = [];
+      let jobs = {};
 
       for (let i = 0; i < appRows.length; i++) {
         const appRow = $(appRows[i]);
@@ -92,9 +94,12 @@ module.exports = app => {
         const appSubmittedOnCell = $(appCells[13]);
         const appSubmittedByCell = $(appCells[14]);
 
-        apps.push({
+        const jobId = jobIdCell.text();
+        jobIds.push(jobId);
+
+        jobs[jobId] = {
           term: termCell.text(),
-          jobId: jobIdCell.text(),
+          jobId: jobId,
           title: titleCell.text(),
           company: companyCell.text(),
           division: divisionCell.text(),
@@ -106,13 +111,14 @@ module.exports = app => {
           appDeadline: appDeadlineCell.text(),
           appSubmittedOn: appSubmittedOnCell.text(),
           appSubmittedBy: appSubmittedByCell.text(),
-        });
+        };
       }
 
       await browser.close();
       return res.json({
         status: 'OK',
-        data: apps,
+        jobIds: jobIds,
+        jobs: jobs,
       });
     } catch (error) {
       return res.json({
