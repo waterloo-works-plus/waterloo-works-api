@@ -1,0 +1,51 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Waterloo Works Mobile API",
+		"_postman_id": "54cb7035-9476-bb04-78a6-cddbf4e2087b",
+		"description": "Mobile API for Waterloo Works",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "applications/get",
+			"request": {
+				"url": "{{host}}/applications/get",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"selectedTerm\": \"410\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/login",
+			"request": {
+				"url": "{{host}}/auth/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
