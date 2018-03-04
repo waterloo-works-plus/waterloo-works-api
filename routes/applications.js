@@ -20,7 +20,7 @@ module.exports = app => {
       selectedTerm = termNum.toString();
     }
 
-    try {
+    try {    
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
       await page.goto('https://cas.uwaterloo.ca/cas/login?service=https://waterlooworks.uwaterloo.ca/waterloo.htm');
@@ -36,7 +36,7 @@ module.exports = app => {
       const submitButtonIdentifier = '#cas-submit';
       await page.waitForSelector(submitButtonIdentifier);
       await page.click(submitButtonIdentifier);
-    
+      
       try {
         const postingsApplicationsButtonIdentifier = '#displayStudentMyPostingsApplications';
         await page.waitForSelector(postingsApplicationsButtonIdentifier, { timeout: 10000 });
@@ -46,11 +46,22 @@ module.exports = app => {
           message: 'Failed to login'
         });
       }
-    
-      await page.evaluate(selectedTerm => {
-        orbisApp.buildForm({'action':'_-_-OmTSRZVRaEMr9pw1r9-auRDZ7vo0565eaAf9pNzLAKslFQpz1cW0GjaRD5MBgffmGrbIgRl-8GGIG06aRwWkyykAbNt2OCjT8G8baBI30tp3AxDGpiiGRlI9NksFAZwNbC3QNLF-xlrvGhvmN0SxgcXiubkp2IP9wsWUHLK_qbLFfV_dnbZylzA6zlZBri8','numOfDays':'-1','selectedTerm':selectedTerm}, '/myAccount/co-op/coopApplications.htm', '').submit();
-      }, selectedTerm);
-    
+
+      try{
+        const selectorId = '#displayStudentMyPostingsApplications';
+        const actionCode = await page.evaluate(selectorId => {
+          return document.querySelector(selectorId + ' > a').onclick.toString().match('_-[a-zA-Z0-9_-]*')[0]
+        }, selectorId);
+        await page.evaluate(selectedTerm, actionCode => {
+          orbisApp.buildForm({'action':actionCode,'numOfDays':'-1','selectedTerm':selectedTerm}, '/myAccount/co-op/coopApplications.htm', '').submit();
+        }, selectedTerm, actionCode);  
+      } catch (error) {
+        return res.json({
+          status: 'Error',
+          message: 'Failed to navigate to postings tab'
+        });
+      }
+
       try {
         const applicationsTableIdentifier = '#na_studentApplicationGridTableID';
         await page.waitForSelector(applicationsTableIdentifier, { visible: true, timeout: 10000 });
@@ -124,9 +135,8 @@ module.exports = app => {
       return res.json({
         status: 'Error',
         message: 'An unknown error occurred',
-        error: error,
+        error: error.message,
       });
     }
   });
-
 }

@@ -10,7 +10,7 @@ Node
 npm install
 ```
 
-### Install
+### Run
 
 ```
 npm start
