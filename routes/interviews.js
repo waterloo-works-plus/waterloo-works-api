@@ -5,19 +5,12 @@ module.exports = app => {
 
   app.post('/interviews/get', async (req, res) => {
     const { username, password } = req.body;
-    let { selectedTerm } = req.body;
 
     if (!username || !password) {
       return res.json({
         status: 'Error',
         message: 'Missing username or password',
       });
-    }
-
-    if (!selectedTerm) {
-      const now = new Date();
-      const termNum = 411 + (now.getFullYear() - 2018) + Math.floor((now.getMonth() - 1) / 4);
-      selectedTerm = termNum.toString();
     }
 
     try {    
