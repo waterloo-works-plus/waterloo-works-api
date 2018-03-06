@@ -64,11 +64,11 @@ module.exports = app => {
         await page.waitForSelector(interviewsTableIdentifier, { visible: true, timeout: 30000 });
       } catch (error) {
         // Tables didn't populate 
-        // Let's check if no applications were found
+        // Let's check for  No records message 
         const noRecordsMessageIdentifier = '#ccrm_studentInterviews_noRecordsMessage';
         await page.waitForSelector(noRecordsMessageIdentifier, { visible: true, timeout: 30000 });
 
-        // No applications message must be visible
+        // No records message must be visible
         return res.json({
           status: 'OK',
           data: []
@@ -104,7 +104,7 @@ module.exports = app => {
           term: termCell.text(),
           scheduleStatus: scheduleStatusCell.text(),
           confirmationStatus: confirmationStatusCell.text(),
-          dateTime: Date.parse(dateTimeCell.text()),
+          dateTime: Date.parse(dateTimeCell.text() + 'EST'),
           type: typeCell.text(),
           location: locationCell.text(),
           method: methodCell.text(),
@@ -112,7 +112,7 @@ module.exports = app => {
           jobTitle: jobTitleCell.text(),
           organization: organizationCell.text(),
           division: divisionCell.text(),
-          mockInterview: (mockInterviewCell.text() == "No" ? false : true),
+          mockInterview: (mockInterviewCell.text() === 'No' ? false : true),
         });
       }
 
