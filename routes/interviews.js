@@ -104,7 +104,7 @@ module.exports = app => {
           term: termCell.text(),
           scheduleStatus: scheduleStatusCell.text(),
           confirmationStatus: confirmationStatusCell.text(),
-          dateTime: Date.parse(dateTimeCell.text() + 'EST'),
+          dateTime: Date.parse(dateTimeCell.text() + ' ' + 'EST'),
           type: typeCell.text(),
           location: locationCell.text(),
           method: methodCell.text(),
