@@ -28,6 +28,26 @@
 			"response": []
 		},
 		{
+			"name": "interviews/get",
+			"request": {
+				"url": "{{host}}/interviews/get",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "/auth/login",
 			"request": {
 				"url": "{{host}}/auth/login",
