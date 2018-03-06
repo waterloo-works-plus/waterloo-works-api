@@ -1,7 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-
+const port = 8080;
 const applicationsRoutes = require('./routes/applications');
+const interviewsRoutes = require('./routes/interviews');
 const authRoutes = require('./routes/auth');
 
 const app = express()
@@ -14,6 +15,7 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // Setup routes
 applicationsRoutes(app);
+interviewsRoutes(app);
 authRoutes(app);
 
-app.listen(8080, () => console.log('Waterloo Works Mobile API listening on port 3000!'))
+app.listen(port, () => console.log('Waterloo Works Mobile API listening on port ' + port.toString()));
