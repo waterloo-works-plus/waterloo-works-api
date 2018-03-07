@@ -2,13 +2,13 @@
 	"variables": [],
 	"info": {
 		"name": "Waterloo Works Mobile API",
-		"_postman_id": "54cb7035-9476-bb04-78a6-cddbf4e2087b",
+		"_postman_id": "1765dbf5-4198-6645-3817-88c21caa7265",
 		"description": "Mobile API for Waterloo Works",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "applications/get",
+			"name": "/applications/get",
 			"request": {
 				"url": "{{host}}/applications/get",
 				"method": "POST",
@@ -42,6 +42,26 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/applications/getJob",
+			"request": {
+				"url": "{{host}}/applications/getJob",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"selectedTerm\": \"410\",\n\t\"jobId\": \"38000\"\n}"
 				},
 				"description": ""
 			},
