@@ -1,12 +1,13 @@
 const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
 
 const authLib = require('../lib/authLib');
 
-module.exports = app => {
-
+module.exports = (app) => {
   app.post('/auth/login', async (req, res) => {
-    const { username, password } = req.body;
+    const {
+      username,
+      password,
+    } = req.body;
 
     if (!username || !password) {
       return res.json({
@@ -18,7 +19,7 @@ module.exports = app => {
     try {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
-      
+
       await authLib.login(page, username, password);
 
       await browser.close();
@@ -34,5 +35,4 @@ module.exports = app => {
       });
     }
   });
-
 };
