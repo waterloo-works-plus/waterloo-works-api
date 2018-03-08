@@ -20,7 +20,9 @@ module.exports = (app) => {
     }
 
     try {
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
       const page = await browser.newPage();
 
       try {
@@ -62,7 +64,9 @@ module.exports = (app) => {
       });
     }
 
-    const {job} = await jobsLib.getJobFromDb(jobId);
+    const {
+      job,
+    } = await jobsLib.getJobFromDb(jobId);
 
     if (job) {
       return res.json({
