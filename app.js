@@ -1,8 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const config = require('./config');
 
 const applicationsRoutes = require('./routes/applications');
 const authRoutes = require('./routes/auth');
+const jobsRoutes = require('./routes/jobs');
+
+// Connect to db
+mongoose.connect('mongodb://' + (config.db.authenticate ? config.db.username + ':' +
+  config.db.password : '') + '@' + config.db.host + ':' + config.db.port + '/' +
+  config.db.name);
 
 const app = express();
 
@@ -15,6 +24,10 @@ app.get('/', (req, res) => res.send('Hello World!'));
 // Setup routes
 applicationsRoutes(app);
 authRoutes(app);
+jobsRoutes(app);
 
-app.listen(8080, () =>
-  console.log('Waterloo Works Mobile API listening on port 3000!'));
+const port = process.env.PORT || config.port;
+
+app.listen(port, () =>
+  console.log('Waterloo Works Mobile API listening on port ' +
+  port.toString() + '!'));

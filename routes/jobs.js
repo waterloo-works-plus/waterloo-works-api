@@ -1,30 +1,22 @@
 const puppeteer = require('puppeteer');
 
 const authLib = require('../lib/authLib');
-const applicationsLib = require('../lib/applicationsLib');
+const jobsLib = require('../lib/jobsLib');
 
 module.exports = (app) => {
-  app.post('/applications/get', async (req, res) => {
+  app.post('/jobs/get', async (req, res) => {
     const {
       username,
       password,
-    } = req.body;
-    let {
+      jobId,
       selectedTerm,
     } = req.body;
 
-    if (!username || !password) {
+    if (!username || !password || !jobId || !selectedTerm) {
       return res.json({
         status: 'Error',
-        message: 'Missing username or password',
+        message: 'Missing parameter username, password, jobId, selectedTerm',
       });
-    }
-
-    if (!selectedTerm) {
-      const now = new Date();
-      const termNum = 411 + 3 * (now.getFullYear() - 2018) +
-        Math.floor((now.getMonth() - 1) / 4);
-      selectedTerm = termNum.toString();
     }
 
     try {
@@ -41,21 +33,47 @@ module.exports = (app) => {
       }
 
       const {
-        jobIds,
-        jobs,
-      } = await applicationsLib.getApplications(page, selectedTerm);
+        job,
+      } = await jobsLib.getJobById(page, selectedTerm, jobId);
 
       await browser.close();
       return res.json({
         status: 'OK',
-        jobIds: jobIds,
-        jobs: jobs,
+        job: job,
       });
     } catch (error) {
       return res.json({
         status: 'Error',
         message: 'An unknown error occurred',
         error: error.message,
+      });
+    }
+  });
+
+  app.post('/jobs/db/get', async (req, res) => {
+    const {
+      jobId,
+    } = req.body;
+
+    if (!jobId) {
+      return res.json({
+        status: 'Error',
+        message: 'Missing job id',
+      });
+    }
+
+    const {job} = await jobsLib.getJobFromDb(jobId);
+
+    if (job) {
+      return res.json({
+        status: 'OK',
+        found: true,
+        job: job,
+      });
+    } else {
+      return res.json({
+        status: 'OK',
+        found: false,
       });
     }
   });
