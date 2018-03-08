@@ -9,9 +9,12 @@ const authRoutes = require('./routes/auth');
 const jobsRoutes = require('./routes/jobs');
 
 // Connect to db
-mongoose.connect('mongodb://' + (config.db.authenticate ? config.db.username + ':' +
+const dbUrl = process.env.MONGODB_URI ||
+  ('mongodb://' + (config.db.authenticate ? config.db.username + ':' +
   config.db.password : '') + '@' + config.db.host + ':' + config.db.port + '/' +
   config.db.name);
+
+mongoose.connect(dbUrl);
 
 const app = express();
 
