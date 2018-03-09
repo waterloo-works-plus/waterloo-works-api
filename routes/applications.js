@@ -28,8 +28,9 @@ module.exports = (app) => {
       selectedTerm = termNum.toString();
     }
 
+    const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
+
     try {
-      const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
       const page = await browser.newPage();
 
       try {
@@ -46,7 +47,6 @@ module.exports = (app) => {
         jobs,
       } = await applicationsLib.getApplications(page, selectedTerm);
 
-      await browser.close();
       return res.json({
         status: 'OK',
         jobIds: jobIds,
@@ -58,6 +58,8 @@ module.exports = (app) => {
         message: 'An unknown error occurred',
         error: error.message,
       });
+    } finally {
+      await browser.close();
     }
   });
 };

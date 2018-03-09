@@ -17,13 +17,13 @@ module.exports = (app) => {
       });
     }
 
+    const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
+    
     try {
-      const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
       const page = await browser.newPage();
 
       await authLib.login(page, username, password);
 
-      await browser.close();
       return res.json({
         status: 'OK',
         message: 'Login successful',
@@ -34,6 +34,8 @@ module.exports = (app) => {
         message: 'Login failed',
         error: error,
       });
+    } finally {
+      await browser.close();
     }
   });
 };

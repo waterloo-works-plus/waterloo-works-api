@@ -25,8 +25,9 @@ module.exports = (app) => {
       numOfDays = -1;
     }
 
+    const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
+    
     try {
-      const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
       const page = await browser.newPage();
 
       try {
@@ -43,7 +44,6 @@ module.exports = (app) => {
         interviews,
       } = await interviewsLib.getInterviews(page, numOfDays);
 
-      await browser.close();
       return res.json({
         status: 'OK',
         interviews: interviews,
@@ -55,6 +55,8 @@ module.exports = (app) => {
         message: 'An unknown error occurred',
         error: error.message,
       });
+    } finally {
+      await browser.close();
     }
   });
 };
