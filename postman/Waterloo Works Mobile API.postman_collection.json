@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "Waterloo Works Mobile API",
-		"_postman_id": "33891129-b8eb-7011-278b-28ebd393d11c",
+		"_postman_id": "c0093265-2a12-f24e-f6cf-d64b6d461dcf",
 		"description": "Mobile API for Waterloo Works",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -28,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "interviews/get",
+			"name": "/interviews/get",
 			"request": {
 				"url": "{{host}}/interviews/get",
 				"method": "POST",
@@ -41,7 +41,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"numOfDays\": -1\n}"
 				},
 				"description": ""
 			},

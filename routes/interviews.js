@@ -2,22 +2,28 @@ const puppeteer = require('puppeteer');
 const authLib = require('../lib/authLib');
 const interviewsLib = require('../lib/interviewsLib');
 
-module.exports = app => {
+module.exports = (app) => {
   app.post('/interviews/get', async (req, res) => {
     const {
       username,
       password,
-      numOfDays
+    } = req.body;
+    let {
+      numOfDays,
     } = req.body;
 
-    if (!username || !password || !numOfDays) {
+    if (!username || !password) {
       return res.json({
         status: 'Error',
         message: 'Missing parameter username, password, numOfDays',
       });
     }
 
-    try {    
+    if (!numOfDays) {
+      numOfDays = -1;
+    }
+
+    try {
       const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
@@ -31,7 +37,7 @@ module.exports = app => {
           message: 'Failed to login',
         });
       }
-      
+
       const {
         interviewIds,
         interviews,
@@ -51,4 +57,4 @@ module.exports = app => {
       });
     }
   });
-}
+};
