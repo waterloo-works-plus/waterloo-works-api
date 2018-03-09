@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const puppeteerUtil = require('../util/puppeteerUtil');
+
 const authLib = require('../lib/authLib');
 const interviewsLib = require('../lib/interviewsLib');
 
@@ -24,9 +26,7 @@ module.exports = (app) => {
     }
 
     try {
-      const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      });
+      const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
       const page = await browser.newPage();
 
       try {
