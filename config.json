@@ -1,0 +1,11 @@
+{
+  "port": 8080,
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "authenticate": false,
+    "username": "",
+    "password": "",
+    "name": "waterlooWorks"
+  }
+}

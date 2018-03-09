@@ -1,5 +1,5 @@
 {
-  "name": "waterloo-works-mobile-api",
+  "name": "waterloo-works-api",
   "version": "1.0.0",
   "description": "API for Waterloo Works mobile",
   "main": "index.js",
@@ -7,12 +7,17 @@
     "test": "eslint **/*.js",
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MunazR/waterloo-works-api"
+  },
   "author": "MunazR",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.2",
+    "mongoose": "^5.0.9",
     "puppeteer": "^1.1.1"
   },
   "devDependencies": {
