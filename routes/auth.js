@@ -18,7 +18,7 @@ module.exports = (app) => {
     }
 
     const browser = await puppeteer.launch(puppeteerUtil.getLaunchFlags());
-    
+
     try {
       const page = await browser.newPage();
 
