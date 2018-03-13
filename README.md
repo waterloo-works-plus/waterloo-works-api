@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/waterloo-works-plus/waterloo-works-api.svg?branch=master)](https://travis-ci.org/waterloo-works-plus/waterloo-works-api)
+
 # Waterloo Works API
 *Not affilliated with the University of Waterloo*
 
