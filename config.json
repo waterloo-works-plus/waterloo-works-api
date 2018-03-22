@@ -1,7 +1,7 @@
 {
   "port": 8080,
   "db": {
-    "host": "localhost",
+    "host": "mongodb",
     "port": 27017,
     "authenticate": false,
     "username": "",
