@@ -106,6 +106,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "/interviews/get-interview",
+			"request": {
+				"url": "{{host}}/interviews/get-interview",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"numOfDays\": -1,\n\t\"interviewId\": \"1918\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
