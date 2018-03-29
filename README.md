@@ -109,3 +109,19 @@ interviewIds: [String] the interview ids
 interviews: {...} map of the interviews
 ```
 Look at [interviewsLib](lib/interviewsLib.js) to get a better idea of the return value.
+
+**POST `/interviews/get-interview`**
+
+Get interview details for a user's interview.
+#### Body
+```
+username: String required the username
+password: String required the password
+interviewId: String required the interview id
+```
+#### Return
+```
+status: 'OK' | 'Error' the status of the request
+interview: {...} map of the interview details
+```
+Look at [interviewsLib](lib/interviewsLib.js) to get a better idea of the return value.
