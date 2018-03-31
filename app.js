@@ -1,4 +1,6 @@
 const express = require('express');
+const expressWinston = require('winston-express-middleware');
+const winston = require('winston');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config');
@@ -24,6 +26,16 @@ app.use(bodyParser.json());
 // Setup health endpoint
 app.get('/', (req, res) => res.send('Hello World!'));
 
+// winston-express-middleware logger makes sense BEFORE the router. 
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ]
+}));
+
 // Setup routes
 applicationsRoutes(app);
 interviewsRoutes(app);
@@ -31,6 +43,16 @@ authRoutes(app);
 jobsRoutes(app);
 
 const port = process.env.PORT || config.port;
+
+// winston-express-middleware errorLogger makes sense AFTER the router. 
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ]
+}));
 
 app.listen(port, () =>
   console.log('Waterloo Works Mobile API listening on port ' +
