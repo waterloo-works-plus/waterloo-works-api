@@ -24,7 +24,7 @@ module.exports = (app) => {
     if (!selectedTerm) {
       const now = new Date();
       const termNum = 411 + 3 * (now.getFullYear() - 2018) +
-        Math.floor((now.getMonth() - 1) / 4);
+        Math.floor((now.getMonth()) / 4);
       selectedTerm = termNum.toString();
     }
 
