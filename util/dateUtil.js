@@ -1,9 +1,8 @@
 module.exports = {
-    isDST: () => {
-      const now = new Date();
-      return (now.getMonth() > 4 ||
-        (now.getMonth() === 4 && now.getDate() >= 11)) &&
-        (now.getMonth() < 10 ||
-        (now.getMonth() === 10 && now.getDate() <= 4));
+    isDST: (date) => {
+      return (date.getMonth() > 4 ||
+        (date.getMonth() === 4 && date.getDate() >= 11)) &&
+        (date.getMonth() < 10 ||
+        (date.getMonth() === 10 && date.getDate() <= 4));
     },
   };
